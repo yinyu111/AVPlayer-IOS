@@ -57,6 +57,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6028814B2D269787004E1C82 /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				6091A15D2C808D0200FFD4B2 /* AudioConfig.h */,
+				6091A15B2C808CEB00FFD4B2 /* AudioConfig.m */,
+				6091A15E2C808DD100FFD4B2 /* AudioCapture.h */,
+				6091A15F2C808DDD00FFD4B2 /* AudioCapture.m */,
+			);
+			path = Capture;
+			sourceTree = "<group>";
+		};
+		6028814C2D26979D004E1C82 /* Encoder */ = {
+			isa = PBXGroup;
+			children = (
+				603D45382D1C09F200F98374 /* AudioEncoder.h */,
+				603D453B2D1C0A1B00F98374 /* AudioEncoder.m */,
+				603D453D2D1C11B800F98374 /* AudioTools.h */,
+				603D453E2D1C11DC00F98374 /* AudioTools.m */,
+			);
+			path = Encoder;
+			sourceTree = "<group>";
+		};
 		6091A1352C808AF500FFD4B2 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +98,8 @@
 		6091A1402C808AF500FFD4B2 /* AVPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				6028814C2D26979D004E1C82 /* Encoder */,
+				6028814B2D269787004E1C82 /* Capture */,
 				6091A15A2C808CA200FFD4B2 /* Audio */,
 				6091A1412C808AF500FFD4B2 /* AppDelegate.h */,
 				6091A1422C808AF500FFD4B2 /* AppDelegate.m */,
@@ -97,14 +121,6 @@
 		6091A15A2C808CA200FFD4B2 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				6091A15D2C808D0200FFD4B2 /* AudioConfig.h */,
-				6091A15B2C808CEB00FFD4B2 /* AudioConfig.m */,
-				6091A15E2C808DD100FFD4B2 /* AudioCapture.h */,
-				6091A15F2C808DDD00FFD4B2 /* AudioCapture.m */,
-				603D45382D1C09F200F98374 /* AudioEncoder.h */,
-				603D453B2D1C0A1B00F98374 /* AudioEncoder.m */,
-				603D453D2D1C11B800F98374 /* AudioTools.h */,
-				603D453E2D1C11DC00F98374 /* AudioTools.m */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
