@@ -37,16 +37,17 @@
         };
         // 音频采集数据回调。在这里将 PCM 数据写入文件。
         _audioCapture.sampleBufferOutputCallBack = ^(CMSampleBufferRef sampleBuffer) {
-            if (sampleBuffer) {
-                // 1、获取 CMBlockBuffer，这里面封装着 PCM 数据。
-                CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
-                size_t lengthAtOffsetOutput, totalLengthOutput;
-                char *dataPointer;
-                
-                // 2、从 CMBlockBuffer 中获取 PCM 数据存储到文件中。
-                CMBlockBufferGetDataPointer(blockBuffer, 0, &lengthAtOffsetOutput, &totalLengthOutput, &dataPointer);
-                [weakSelf.fileHandle writeData:[NSData dataWithBytes:dataPointer length:totalLengthOutput]];
-            }
+//            if (sampleBuffer) {
+//                // 1、获取 CMBlockBuffer，这里面封装着 PCM 数据。
+//                CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+//                size_t lengthAtOffsetOutput, totalLengthOutput;
+//                char *dataPointer;
+//                
+//                // 2、从 CMBlockBuffer 中获取 PCM 数据存储到文件中。
+//                CMBlockBufferGetDataPointer(blockBuffer, 0, &lengthAtOffsetOutput, &totalLengthOutput, &dataPointer);
+//                [weakSelf.fileHandle writeData:[NSData dataWithBytes:dataPointer length:totalLengthOutput]];
+//            }
+            [weakSelf.audioEncoder encodeSampleBuffer:sampleBuffer];
         };
     }
     
@@ -61,7 +62,7 @@
             NSLog(@"AudioEcoder error:%zi %@", error.code, error.localizedDescription);
         };
         
-        //
+        // 音频编码数据回调。在这里将 AAC 数据写入文件。
         _audioEncoder.sampleBufferOutputCallBack = ^(CMSampleBufferRef sampleBuffer) {
             if (sampleBuffer) {
                 //1

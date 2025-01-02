@@ -167,7 +167,7 @@
         char *totalBuffer = malloc(totalSize);
         char *p = totalBuffer;
         memset(totalBuffer, 0, (int) totalSize);
-        memcpy(totalBuffer, _leftLength, _leftLength); // 拷贝上次遗留的数据。
+        memcpy(totalBuffer, _leftBuffer, _leftLength); // 拷贝上次遗留的数据。
         memcpy(totalBuffer + _leftLength, dataPointer, audioLength); // 拷贝这次新来的数据。
         
         // 分 encodeCount 次给编码器送数据。
@@ -178,7 +178,7 @@
         
         // 处理不够 _bufferLength 长度的剩余数据，先存在 _leftBuffer 中，等下次凑足一次编码需要的数据再编码。
         _leftLength = totalSize % _bufferLength;
-        memset(_leftLength, 0, _bufferLength);
+        memset(_leftBuffer, 0, _bufferLength);
         memcpy(_leftBuffer, totalBuffer + (totalSize - _leftLength), _leftLength);
         
         // 清理。
