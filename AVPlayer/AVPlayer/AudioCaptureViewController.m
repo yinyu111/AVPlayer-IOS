@@ -8,10 +8,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioCaptureViewController.h"
 #import "AudioCapture.h"
+#import "AudioEncoder.h"
+#import "AudioTools.h"
 
 @interface AudioCaptureViewController ()
 @property (nonatomic, strong) AudioConfig *audioConfig;
 @property (nonatomic, strong) AudioCapture *audioCapture;
+@property (nonatomic, strong) AudioEncoder *audioEncoder;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 @end
 
@@ -50,9 +53,45 @@
     return _audioCapture;
 }
 
+- (AudioEncoder *)audioEncoder {
+    if (!_audioEncoder) {
+        __weak typeof(self) weakSelf = self;
+        _audioEncoder = [[AudioEncoder alloc] initWithAudioBitrate:96000];
+        _audioEncoder.errorCallBack = ^(NSError* error) {
+            NSLog(@"AudioEcoder error:%zi %@", error.code, error.localizedDescription);
+        };
+        
+        //
+        _audioEncoder.sampleBufferOutputCallBack = ^(CMSampleBufferRef sampleBuffer) {
+            if (sampleBuffer) {
+                //1
+                AudioStreamBasicDescription audioFormat = *CMAudioFormatDescriptionGetStreamBasicDescription(CMSampleBufferGetFormatDescription(sampleBuffer));
+                
+                //2
+                CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+                size_t totalLength;
+                char *dataPointer = NULL;
+                CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &totalLength, &dataPointer);
+                if (totalLength == 0 || !dataPointer) {
+                    return;
+                }
+                
+                // 3、在每个 AAC packet 前先写入 ADTS 头数据。
+                // 由于 AAC 数据存储文件时需要在每个包（packet）前添加 ADTS 头来用于解码器解码音频流，所以这里添加一下 ADTS 头。
+                [weakSelf.fileHandle writeData:[AudioTools adtsDataWithChannels:audioFormat.mChannelsPerFrame sampleRate:audioFormat.mSampleRate rawDataLength:totalLength]];
+                
+                // 4、写入 AAC packet 数据。
+                [weakSelf.fileHandle writeData:[NSData dataWithBytes:dataPointer length:totalLength]];
+            }
+        };
+    }
+    
+    return _audioEncoder;
+}
+
 - (NSFileHandle *)fileHandle {
     if (!_fileHandle) {
-        NSString *audioPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"test.pcm"];
+        NSString *audioPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"test.aac"];
         NSLog(@"PCM file path: %@", audioPath);
         [[NSFileManager defaultManager] removeItemAtPath:audioPath error:nil];
         [[NSFileManager defaultManager] createFileAtPath:audioPath contents:nil attributes:nil];
@@ -88,12 +127,12 @@
     
     
     // Navigation item.
-//    创建一个新的 UIBarButtonItem 实例，用作开始按钮。
-//    initWithTitle:@"Start" 设置按钮的标题为 “Start”。
-//    style:UIBarButtonItemStylePlain 设置按钮样式为普通（没有特殊的背景或边框）。
-//    target:self 指定按钮动作的目标是当前视图控制器。
-//    action:@selector(start) 指定当按钮被点击时，将调用当前视图控制器的 start 方法。
-    UIBarButtonItem *startBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(start)];//
+    //    创建一个新的 UIBarButtonItem 实例，用作开始按钮。
+    //    initWithTitle:@"Start" 设置按钮的标题为 “Start”。
+    //    style:UIBarButtonItemStylePlain 设置按钮样式为普通（没有特殊的背景或边框）。
+    //    target:self 指定按钮动作的目标是当前视图控制器。
+    //    action:@selector(start) 指定当按钮被点击时，将调用当前视图控制器的 start 方法。
+    UIBarButtonItem *startBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(start)];
     UIBarButtonItem *stopBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Stop" style:UIBarButtonItemStylePlain target:self action:@selector(stop)];
     //设置导航项的右侧按钮项数组。
 //    [startBarButton, stopBarButton] 创建一个包含两个按钮的数组。
@@ -109,9 +148,9 @@
     AVAudioSession *session = [AVAudioSession sharedInstance];
 
     // 2、设置分类和选项。
-//    设置音频会话的分类为 AVAudioSessionCategoryPlayAndRecord，这意味着应用程序将同时播放和录制音频。
-//    使用 withOptions 参数设置音频会话的选项，这里指定了 AVAudioSessionCategoryOptionMixWithOthers（允许与其他音频应用同时播放）和 AVAudioSessionCategoryOptionDefaultToSpeaker（默认使用扬声器播放）。
-//    将错误引用传递给 error 参数，以便在设置过程中发生错误时可以捕获。
+    //    设置音频会话的分类为 AVAudioSessionCategoryPlayAndRecord，这意味着应用程序将同时播放和录制音频。
+    //    使用 withOptions 参数设置音频会话的选项，这里指定了 AVAudioSessionCategoryOptionMixWithOthers（允许与其他音频应用同时播放）和 AVAudioSessionCategoryOptionDefaultToSpeaker（默认使用扬声器播放）。
+    //    将错误引用传递给 error 参数，以便在设置过程中发生错误时可以捕获。
     [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
     if (error) {
         NSLog(@"AVAudioSession setCategory error.");
@@ -120,8 +159,8 @@
     }
     
     // 3、设置模式。
-//    设置音频会话的模式为 AVAudioSessionModeVideoRecording，这可能会影响音频会话的优先级和行为。
-//    同样，检查是否有错误发生，并相应处理。
+    //    设置音频会话的模式为 AVAudioSessionModeVideoRecording，这可能会影响音频会话的优先级和行为。
+    //    同样，检查是否有错误发生，并相应处理。
     [session setMode:AVAudioSessionModeVideoRecording error:&error];
     if (error) {
         NSLog(@"AVAudioSession setMode error.");

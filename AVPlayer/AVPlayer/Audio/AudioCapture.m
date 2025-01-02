@@ -46,6 +46,8 @@
     }
     
     __weak typeof(self) weakSelf = self;
+    //避免主线程卡顿
+    //!!!!!!!!!!!!!!!============dispatch_async==============!!!!!!!!!!!!!!!
     dispatch_async(_captureQueue, ^{
         if (!weakSelf.audioCaptureInstance) {
             NSError *error = nil;
@@ -59,6 +61,7 @@
         }
         
         // 开始采集。
+        //!!!!!!!!!!!!!!!============AudioOutputUnitStart==============!!!!!!!!!!!!!!!
         OSStatus startStatus = AudioOutputUnitStart(weakSelf.audioCaptureInstance);
         if (startStatus != noErr) {
             // 捕捉并回调开始采集时的错误。
@@ -232,6 +235,7 @@ static OSStatus audioBufferCallBack(void *inRefCon,
         // 这个数据回调的频率与音频采样率（上面设置的 mSampleRate 44100）是没关系的。声道数、采样位深、采样率共同决定了设备单位时间里采样数据的大小，这些数据是会缓冲起来，然后一块一块的通过这个数据回调给我们，这个回调的频率是底层一块一块给我们数据的速度，跟采样率无关。
         // 3）这个数据回调的频率是多少？
         // 这个数据回调的间隔是 [AVAudioSession sharedInstance].preferredIOBufferDuration，频率即该值的倒数。我们可以通过 [[AVAudioSession sharedInstance] setPreferredIOBufferDuration:1 error:nil] 设置这个值来控制回调频率。
+        //!!!!!!!!!!!!!!!============AudioUnitRender==============!!!!!!!!!!!!!!!
         OSStatus status = AudioUnitRender(capture.audioCaptureInstance,
                                           ioActionFlags,
                                           inTimeStamp,

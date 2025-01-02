@@ -10,6 +10,7 @@
 
 @implementation AudioConfig
 
+//默认配置
 + (instancetype)defaultConfig {
     AudioConfig *config = [[self alloc] init];
     config.sampleRate = 44100;

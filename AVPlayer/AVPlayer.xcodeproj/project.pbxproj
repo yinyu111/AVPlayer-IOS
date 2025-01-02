@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453B2D1C0A1B00F98374 /* AudioEncoder.m */; };
+		603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453E2D1C11DC00F98374 /* AudioTools.m */; };
 		6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1422C808AF500FFD4B2 /* AppDelegate.m */; };
 		6091A1462C808AF500FFD4B2 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1452C808AF500FFD4B2 /* SceneDelegate.m */; };
 		6091A1492C808AF500FFD4B2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1482C808AF500FFD4B2 /* ViewController.m */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		603D45382D1C09F200F98374 /* AudioEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
+		603D453B2D1C0A1B00F98374 /* AudioEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEncoder.m; sourceTree = "<group>"; };
+		603D453D2D1C11B800F98374 /* AudioTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioTools.h; sourceTree = "<group>"; };
+		603D453E2D1C11DC00F98374 /* AudioTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioTools.m; sourceTree = "<group>"; };
 		6091A13E2C808AF500FFD4B2 /* AVPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6091A1412C808AF500FFD4B2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6091A1422C808AF500FFD4B2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -95,6 +101,10 @@
 				6091A15B2C808CEB00FFD4B2 /* AudioConfig.m */,
 				6091A15E2C808DD100FFD4B2 /* AudioCapture.h */,
 				6091A15F2C808DDD00FFD4B2 /* AudioCapture.m */,
+				603D45382D1C09F200F98374 /* AudioEncoder.h */,
+				603D453B2D1C0A1B00F98374 /* AudioEncoder.m */,
+				603D453D2D1C11B800F98374 /* AudioTools.h */,
+				603D453E2D1C11DC00F98374 /* AudioTools.m */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -170,8 +180,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
+				603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */,
 				6091A1602C808DDD00FFD4B2 /* AudioCapture.m in Sources */,
 				6091A1492C808AF500FFD4B2 /* ViewController.m in Sources */,
+				603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */,
 				6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */,
 				6091A1542C808AF600FFD4B2 /* main.m in Sources */,
 				60BE1FDD2CAFC8A7002ED9D7 /* AudioCaptureViewController.m in Sources */,
