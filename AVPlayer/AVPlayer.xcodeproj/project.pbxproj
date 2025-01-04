@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6028815E2D27A753004E1C82 /* MuxerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028815D2D27A753004E1C82 /* MuxerConfig.m */; };
+		602881672D27AB18004E1C82 /* MP4Muxer.m in Sources */ = {isa = PBXBuildFile; fileRef = 602881662D27AB18004E1C82 /* MP4Muxer.m */; };
 		603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453B2D1C0A1B00F98374 /* AudioEncoder.m */; };
 		603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453E2D1C11DC00F98374 /* AudioTools.m */; };
 		6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1422C808AF500FFD4B2 /* AppDelegate.m */; };
@@ -22,6 +24,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		602881512D2798FF004E1C82 /* MediaBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaBase.h; sourceTree = "<group>"; };
+		602881542D279D58004E1C82 /* MuxerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MuxerConfig.h; sourceTree = "<group>"; };
+		6028815D2D27A753004E1C82 /* MuxerConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MuxerConfig.m; sourceTree = "<group>"; };
+		602881662D27AB18004E1C82 /* MP4Muxer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MP4Muxer.m; sourceTree = "<group>"; };
+		602881682D27AB30004E1C82 /* MP4Muxer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MP4Muxer.h; sourceTree = "<group>"; };
 		603D45382D1C09F200F98374 /* AudioEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
 		603D453B2D1C0A1B00F98374 /* AudioEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEncoder.m; sourceTree = "<group>"; };
 		603D453D2D1C11B800F98374 /* AudioTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioTools.h; sourceTree = "<group>"; };
@@ -79,6 +86,25 @@
 			path = Encoder;
 			sourceTree = "<group>";
 		};
+		6028814D2D279744004E1C82 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				602881512D2798FF004E1C82 /* MediaBase.h */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		602881532D2799F4004E1C82 /* Muxer */ = {
+			isa = PBXGroup;
+			children = (
+				602881542D279D58004E1C82 /* MuxerConfig.h */,
+				6028815D2D27A753004E1C82 /* MuxerConfig.m */,
+				602881682D27AB30004E1C82 /* MP4Muxer.h */,
+				602881662D27AB18004E1C82 /* MP4Muxer.m */,
+			);
+			path = Muxer;
+			sourceTree = "<group>";
+		};
 		6091A1352C808AF500FFD4B2 = {
 			isa = PBXGroup;
 			children = (
@@ -98,9 +124,10 @@
 		6091A1402C808AF500FFD4B2 /* AVPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				602881532D2799F4004E1C82 /* Muxer */,
+				6028814D2D279744004E1C82 /* Base */,
 				6028814C2D26979D004E1C82 /* Encoder */,
 				6028814B2D269787004E1C82 /* Capture */,
-				6091A15A2C808CA200FFD4B2 /* Audio */,
 				6091A1412C808AF500FFD4B2 /* AppDelegate.h */,
 				6091A1422C808AF500FFD4B2 /* AppDelegate.m */,
 				6091A1442C808AF500FFD4B2 /* SceneDelegate.h */,
@@ -116,13 +143,6 @@
 				6091A1532C808AF600FFD4B2 /* main.m */,
 			);
 			path = AVPlayer;
-			sourceTree = "<group>";
-		};
-		6091A15A2C808CA200FFD4B2 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +176,7 @@
 				TargetAttributes = {
 					6091A13D2C808AF500FFD4B2 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1620;
 					};
 				};
 			};
@@ -198,10 +219,12 @@
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
 				603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */,
 				6091A1602C808DDD00FFD4B2 /* AudioCapture.m in Sources */,
+				602881672D27AB18004E1C82 /* MP4Muxer.m in Sources */,
 				6091A1492C808AF500FFD4B2 /* ViewController.m in Sources */,
 				603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */,
 				6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */,
 				6091A1542C808AF600FFD4B2 /* main.m in Sources */,
+				6028815E2D27A753004E1C82 /* MuxerConfig.m in Sources */,
 				60BE1FDD2CAFC8A7002ED9D7 /* AudioCaptureViewController.m in Sources */,
 				6091A1462C808AF500FFD4B2 /* SceneDelegate.m in Sources */,
 			);
@@ -350,6 +373,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7YD9JS9Y9;
@@ -369,6 +393,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kaku.AVPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -378,6 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7YD9JS9Y9;
@@ -397,6 +424,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kaku.AVPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

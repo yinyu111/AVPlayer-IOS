@@ -10,12 +10,14 @@
 #import "AudioCapture.h"
 #import "AudioEncoder.h"
 #import "AudioTools.h"
+#import "MP4Muxer.h"
 
 @interface AudioCaptureViewController ()
 @property (nonatomic, strong) AudioConfig *audioConfig;
 @property (nonatomic, strong) AudioCapture *audioCapture;
 @property (nonatomic, strong) AudioEncoder *audioEncoder;
-@property (nonatomic, strong) NSFileHandle *fileHandle;
+@property (nonatomic, strong) MuxerConfig *muxerConfig;
+@property (nonatomic, strong) MP4Muxer *muxer;
 @end
 
 @implementation AudioCaptureViewController
@@ -62,44 +64,40 @@
             NSLog(@"AudioEcoder error:%zi %@", error.code, error.localizedDescription);
         };
         
-        // 音频编码数据回调。在这里将 AAC 数据写入文件。
+
+        // 音频编码数据回调。这里编码的 AAC 数据送给封装器。
+        // 与之前将编码后的 AAC 数据存储为 AAC 文件不同的是，这里编码后送给封装器的 AAC 数据是没有添加 ADTS 头的，因为我们这里封装的是 M4A 格式，不需要 ADTS 头。
         _audioEncoder.sampleBufferOutputCallBack = ^(CMSampleBufferRef sampleBuffer) {
-            if (sampleBuffer) {
-                //1
-                AudioStreamBasicDescription audioFormat = *CMAudioFormatDescriptionGetStreamBasicDescription(CMSampleBufferGetFormatDescription(sampleBuffer));
-                
-                //2
-                CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
-                size_t totalLength;
-                char *dataPointer = NULL;
-                CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &totalLength, &dataPointer);
-                if (totalLength == 0 || !dataPointer) {
-                    return;
-                }
-                
-                // 3、在每个 AAC packet 前先写入 ADTS 头数据。
-                // 由于 AAC 数据存储文件时需要在每个包（packet）前添加 ADTS 头来用于解码器解码音频流，所以这里添加一下 ADTS 头。
-                [weakSelf.fileHandle writeData:[AudioTools adtsDataWithChannels:audioFormat.mChannelsPerFrame sampleRate:audioFormat.mSampleRate rawDataLength:totalLength]];
-                
-                // 4、写入 AAC packet 数据。
-                [weakSelf.fileHandle writeData:[NSData dataWithBytes:dataPointer length:totalLength]];
-            }
+            [weakSelf.muxer appendSampleBuffer:sampleBuffer];
         };
     }
     
     return _audioEncoder;
 }
 
-- (NSFileHandle *)fileHandle {
-    if (!_fileHandle) {
-        NSString *audioPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"test.aac"];
-        NSLog(@"PCM file path: %@", audioPath);
+- (MuxerConfig *)muxerConfig {
+    if (!_muxerConfig) {
+        _muxerConfig = [[MuxerConfig alloc] init];
+        NSString *audioPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"test.m4a"];
+        NSLog(@"M4A file path: %@", audioPath);
         [[NSFileManager defaultManager] removeItemAtPath:audioPath error:nil];
-        [[NSFileManager defaultManager] createFileAtPath:audioPath contents:nil attributes:nil];
-        _fileHandle = [NSFileHandle fileHandleForWritingAtPath:audioPath];
+        _muxerConfig.outputURL = [NSURL fileURLWithPath:audioPath];
+        _muxerConfig.muxerType = MediaAudio;
     }
+    
+    return _muxerConfig;
+}
 
-    return _fileHandle;
+
+- (MP4Muxer *)muxer {
+    if (!_muxer) {
+        _muxer = [[MP4Muxer alloc] initWithConfig:self.muxerConfig];
+        _muxer.errorCallBack = ^(NSError* error) {
+            NSLog(@"MP4Muxer error:%zi %@", error.code, error.localizedDescription);
+        };
+    }
+    
+    return _muxer;
 }
 
 #pragma mark - Lifecycle
@@ -111,12 +109,8 @@
     
     // 完成音频采集后，可以将 App Document 文件夹下面的 test.pcm 文件拷贝到电脑上，使用 ffplay 播放：
     // ffplay -ar 44100 -channels 2 -f s16le -i test.pcm
-}
-
-- (void)dealloc {
-    if (_fileHandle) {
-        [_fileHandle closeFile];
-    }
+    // ffplay -i test.aac
+    // ffplay -i test.m4a
 }
 
 #pragma mark - Setup
@@ -180,11 +174,18 @@
 
 #pragma mark - Action
 - (void)start {
+    // 启动采集器。
     [self.audioCapture startRunning];
+    // 启动封装器。
+    [self.muxer startWriting];
 }
 
 - (void)stop {
+    // 停止采集器。
     [self.audioCapture stopRunning];
+    [self.muxer stopWriting:^(BOOL success, NSError * _Nonnull error) {
+        NSLog(@"MP4Muxer %@", success ? @"success" : [NSString stringWithFormat:@"error %zi %@", error.code, error.localizedDescription]);
+    }];
 }
 
 @end

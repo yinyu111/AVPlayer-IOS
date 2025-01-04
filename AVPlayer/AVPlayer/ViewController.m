@@ -8,7 +8,7 @@
 //#import "ViewController.h"
 //
 //// 定义一个静态常量字符串，作为表格视图单元的重用标识符。
-//static NSString * const KFMainTableCellIdentifier = @"KFMainTableCellIdentifier";
+//static NSString * const MainTableCellIdentifier = @"MainTableCellIdentifier";
 //
 //// 类扩展，声明私有属性和方法。
 //
@@ -110,9 +110,9 @@
 //
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    // 重新使用或创建单元格，并设置其文本。
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:KFMainTableCellIdentifier];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MainTableCellIdentifier];
 //    if (!cell) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:KFMainTableCellIdentifier];
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:MainTableCellIdentifier];
 //    }
 //    NSString *demoTitle = self.demoList[indexPath.row];
 //    cell.textLabel.text = demoTitle;
@@ -124,7 +124,7 @@
 
 #import "ViewController.h"
 
-static NSString * const KFMainTableCellIdentifier = @"KFMainTableCellIdentifier";
+static NSString * const MainTableCellIdentifier = @"MainTableCellIdentifier";
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) UITableView *myTableView;
@@ -207,9 +207,9 @@ static NSString * const KFMainTableCellIdentifier = @"KFMainTableCellIdentifier"
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:KFMainTableCellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MainTableCellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:KFMainTableCellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:MainTableCellIdentifier];
     }
     
     NSString *demoTitle = self.demoList[indexPath.row];
