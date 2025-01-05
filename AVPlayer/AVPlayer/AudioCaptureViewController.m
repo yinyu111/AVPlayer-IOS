@@ -39,16 +39,6 @@
         };
         // 音频采集数据回调。在这里将 PCM 数据写入文件。
         _audioCapture.sampleBufferOutputCallBack = ^(CMSampleBufferRef sampleBuffer) {
-//            if (sampleBuffer) {
-//                // 1、获取 CMBlockBuffer，这里面封装着 PCM 数据。
-//                CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
-//                size_t lengthAtOffsetOutput, totalLengthOutput;
-//                char *dataPointer;
-//                
-//                // 2、从 CMBlockBuffer 中获取 PCM 数据存储到文件中。
-//                CMBlockBufferGetDataPointer(blockBuffer, 0, &lengthAtOffsetOutput, &totalLengthOutput, &dataPointer);
-//                [weakSelf.fileHandle writeData:[NSData dataWithBytes:dataPointer length:totalLengthOutput]];
-//            }
             [weakSelf.audioEncoder encodeSampleBuffer:sampleBuffer];
         };
     }
@@ -183,6 +173,7 @@
 - (void)stop {
     // 停止采集器。
     [self.audioCapture stopRunning];
+    // 停止封装器。
     [self.muxer stopWriting:^(BOOL success, NSError * _Nonnull error) {
         NSLog(@"MP4Muxer %@", success ? @"success" : [NSString stringWithFormat:@"error %zi %@", error.code, error.localizedDescription]);
     }];

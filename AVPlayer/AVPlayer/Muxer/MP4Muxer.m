@@ -124,7 +124,7 @@ typedef NS_ENUM(NSInteger, MP4MuxerStatus) {
         }
         
         // 3. 检查 Muxer 状态。
-        if (weakSelf.muxWriter || weakSelf.muxWriter.status != AVAssetWriterStatusWriting) {
+        if (!weakSelf.muxWriter || weakSelf.muxWriter.status != AVAssetWriterStatusWriting) {
             weakSelf.muxerStatus = MP4MuxerStatusFailed;
             CFRelease(sampleBuffer);
             dispatch_semaphore_signal(weakSelf.semaphore);
