@@ -149,8 +149,8 @@ static NSString * const MainTableCellIdentifier = @"MainTableCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.demoList = @[@"Audio Capture"];
-    self.demoPageNameList = @[@"AudioCaptureViewController"];
+    self.demoList = @[@"Audio Capture", @"Audio Demuxer"];
+    self.demoPageNameList = @[@"AudioCaptureViewController", @"AudioDemuxerViewController"];
     
     [self setupUI];
 }
