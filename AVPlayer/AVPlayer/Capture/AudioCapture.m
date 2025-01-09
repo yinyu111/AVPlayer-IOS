@@ -24,7 +24,7 @@
     self = [super init];
     if (self) {
         _config = config;
-        _captureQueue = dispatch_queue_create("com.KeyFrameKit.audioCapture", DISPATCH_QUEUE_SERIAL);
+        _captureQueue = dispatch_queue_create("com.kaku.audioCapture", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;

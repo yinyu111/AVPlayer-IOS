@@ -29,7 +29,7 @@
     self = [super init];
     if (self) {
         _audioBitrate = audioBitrate;
-        _encoderQueue = dispatch_queue_create("com.KeyFrameKit.audioEncoder", DISPATCH_QUEUE_SERIAL);
+        _encoderQueue = dispatch_queue_create("com.kaku.audioEncoder", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;

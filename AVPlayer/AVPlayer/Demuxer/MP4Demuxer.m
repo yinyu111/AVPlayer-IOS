@@ -47,7 +47,7 @@
         _audioQueueSemaphore = dispatch_semaphore_create(1);
         _videoQueueSemaphore = dispatch_semaphore_create(1);
         _demuxerStatus = MP4DemuxerStatusUnknown;
-        _demuxerQueue = dispatch_queue_create("com.KeyFrameKit.demuxerQueue", DISPATCH_QUEUE_SERIAL);
+        _demuxerQueue = dispatch_queue_create("com.kaku.demuxerQueue", DISPATCH_QUEUE_SERIAL);
         CMSimpleQueueCreate(kCFAllocatorDefault, MP4DemuxerQueueMaxCount, &_audioQueue);
         CMSimpleQueueCreate(kCFAllocatorDefault, MP4DemuxerQueueMaxCount, &_videoQueue);
     }

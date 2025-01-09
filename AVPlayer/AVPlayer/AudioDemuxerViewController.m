@@ -9,9 +9,12 @@
 #import "MP4Demuxer.h"
 #import "AudioTools.h"
 
+#import "AudioDecoder.h"
+
 @interface AudioDemuxerViewController ()
 @property (nonatomic, strong) DemuxerConfig *demuxerConfig;
 @property (nonatomic, strong) MP4Demuxer *demuxer;
+@property (nonatomic, strong) AudioDecoder *decoder;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 @end
 
@@ -41,9 +44,35 @@
     return _demuxer;
 }
 
+- (AudioDecoder *)decoder {
+    if (!_decoder) {
+        __weak typeof(self) weakSelf = self;
+        _decoder = [[AudioDecoder alloc] init];
+        _decoder.errorCallBack = ^(NSError *error) {
+            NSLog(@"AudioDecoder error:%zi %@", error.code, error.localizedDescription);
+        };
+        // 解码数据回调。在这里把解码后的音频 PCM 数据存储为文件。
+        _decoder.sampleBufferOutputCallBack = ^(CMSampleBufferRef sampleBuffer) {
+            if (sampleBuffer) {
+                CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+                size_t totolLength;
+                char *dataPointer = NULL;
+                CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &totolLength, &dataPointer);
+                if (totolLength == 0 || !dataPointer) {
+                    return;
+                }
+                
+                [weakSelf.fileHandle writeData:[NSData dataWithBytes:dataPointer length:totolLength]];
+            }
+        };
+    }
+    
+    return _decoder;
+}
+
 - (NSFileHandle *)fileHandle {
     if (!_fileHandle) {
-        NSString *audioPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"output.aac"];
+        NSString *audioPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"output.pcm"];
         [[NSFileManager defaultManager] removeItemAtPath:audioPath error:nil];
         [[NSFileManager defaultManager] createFileAtPath:audioPath contents:nil attributes:nil];
         _fileHandle = [NSFileHandle fileHandleForWritingAtPath:audioPath];
@@ -60,7 +89,17 @@
     
     // 完成音频解封装后，可以将 App Document 文件夹下面的 output.aac 文件拷贝到电脑上，使用 ffplay 播放：
     // ffplay -i output.aac
+    // 完成音频解码后，可以将 App Document 文件夹下面的 output.pcm 文件拷贝到电脑上，使用 ffplay 播放：
+    // ffplay -ar 44100 -ch_layout stereo -f s16le -i output.pcm
 }
+
+- (void)dealloc {
+    if (_fileHandle) {
+        [_fileHandle closeFile];
+        _fileHandle = nil;
+    }
+}
+
 
 #pragma mark - Setup
 - (void)setupUI {
@@ -105,7 +144,8 @@
         while (self.demuxer.hasAudioSampleBuffer) {
             CMSampleBufferRef audioBuffer = [self.demuxer copyNextAudioSampleBuffer];
             if (audioBuffer) {
-                [self saveSampleBuffer:audioBuffer];
+                //[self saveSampleBuffer:audioBuffer];
+                [self decodeSampleBuffer:audioBuffer];
                 CFRelease(audioBuffer);
             }
         }
@@ -115,28 +155,87 @@
     });
 }
 
-- (void)saveSampleBuffer:(CMSampleBufferRef)sampleBuffer {
-    // 将解封装后的数据存储为 AAC 文件。
-    if (sampleBuffer) {
-        // 获取解封装后的 AAC 编码裸数据。
-        AudioStreamBasicDescription streamBasicDescription = *CMAudioFormatDescriptionGetStreamBasicDescription(CMSampleBufferGetFormatDescription(sampleBuffer));
-        CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
-        size_t totolLength;
-        char *dataPointer = NULL;
-        CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &totolLength, &dataPointer);
-        if (totolLength == 0 || !dataPointer) {
-            return;
-        }
+- (void)decodeSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+    // 获取解封装后的 AAC 编码裸数据。
+    CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+    size_t totolLength;
+    char *dataPointer = NULL;
+    CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &totolLength, &dataPointer);
+    if (totolLength == 0 || !dataPointer) {
+        return;
+    }
+    
+    // 目前 AudioDecoder 的解码接口实现的是单包（packet，1 packet 有 1024 帧）解码。而从 Demuxer 获取的一个 CMSampleBuffer 可能包含多个包，所以这里要拆一下包，再送给解码器。
+    NSLog(@"SampleNum: %ld", CMSampleBufferGetNumSamples(sampleBuffer));
+    for (NSInteger index = 0; index < CMSampleBufferGetNumSamples(sampleBuffer); index++) {
+        // 1、获取一个包的数据。
+        size_t sampleSize = CMSampleBufferGetSampleSize(sampleBuffer, index);
+        CMSampleTimingInfo timingInfo;
+        CMSampleBufferGetSampleTimingInfo(sampleBuffer, index, &timingInfo);
+        char *sampleDataPointer = malloc(sampleSize);
+        memcpy(sampleDataPointer, dataPointer, sampleSize);
         
-        // 将 AAC 编码裸数据存储为 AAC 文件，这时候需要在每个包前增加 ADTS 头信息。
-        for (NSInteger index = 0; index < CMSampleBufferGetNumSamples(sampleBuffer); index++) {
-            size_t sampleSize = CMSampleBufferGetSampleSize(sampleBuffer, index);
-            [self.fileHandle writeData:[AudioTools adtsDataWithChannels:streamBasicDescription.mChannelsPerFrame sampleRate:streamBasicDescription.mSampleRate rawDataLength:sampleSize]];
-            [self.fileHandle writeData:[NSData dataWithBytes:dataPointer length:sampleSize]];
-            dataPointer += sampleSize;
+        // 2、将数据封装到 CMBlockBuffer 中。
+        CMBlockBufferRef packetBlockBuffer;
+        OSStatus status = CMBlockBufferCreateWithMemoryBlock(kCFAllocatorDefault,
+                                                              sampleDataPointer,
+                                                              sampleSize,
+                                                              NULL,
+                                                              NULL,
+                                                              0,
+                                                              sampleSize,
+                                                              0,
+                                                              &packetBlockBuffer);
+        
+        if (status == noErr) {
+            // 3、将 CMBlockBuffer 封装到 CMSampleBuffer 中。
+            CMSampleBufferRef packetSampleBuffer = NULL;
+            const size_t sampleSizeArray[] = {sampleSize};
+            status = CMSampleBufferCreateReady(kCFAllocatorDefault,
+                                               packetBlockBuffer,
+                                               CMSampleBufferGetFormatDescription(sampleBuffer),
+                                               1,
+                                               1,
+                                               &timingInfo,
+                                               1,
+                                               sampleSizeArray,
+                                               &packetSampleBuffer);
+            CFRelease(packetBlockBuffer);
+            
+            // 4、解码这个包的数据。
+            if (packetSampleBuffer) {
+                [self.decoder decodeSampleBuffer:packetSampleBuffer];
+                CFRelease(packetSampleBuffer);
+            }
         }
+        dataPointer += sampleSize;
     }
 }
+
+
+
+//- (void)saveSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+//    // 将解封装后的数据存储为 AAC 文件。
+//    if (sampleBuffer) {
+//        // 获取解封装后的 AAC 编码裸数据。
+//        AudioStreamBasicDescription streamBasicDescription = *CMAudioFormatDescriptionGetStreamBasicDescription(CMSampleBufferGetFormatDescription(sampleBuffer));
+//        CMBlockBufferRef blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+//        size_t totolLength;
+//        char *dataPointer = NULL;
+//        CMBlockBufferGetDataPointer(blockBuffer, 0, NULL, &totolLength, &dataPointer);
+//        if (totolLength == 0 || !dataPointer) {
+//            return;
+//        }
+//        
+//        // 将 AAC 编码裸数据存储为 AAC 文件，这时候需要在每个包前增加 ADTS 头信息。
+//        for (NSInteger index = 0; index < CMSampleBufferGetNumSamples(sampleBuffer); index++) {
+//            size_t sampleSize = CMSampleBufferGetSampleSize(sampleBuffer, index);
+//            [self.fileHandle writeData:[AudioTools adtsDataWithChannels:streamBasicDescription.mChannelsPerFrame sampleRate:streamBasicDescription.mSampleRate rawDataLength:sampleSize]];
+//            [self.fileHandle writeData:[NSData dataWithBytes:dataPointer length:sampleSize]];
+//            dataPointer += sampleSize;
+//        }
+//    }
+//}
 
 
 
