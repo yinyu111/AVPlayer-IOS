@@ -14,6 +14,9 @@
 		602881722D2BDF96004E1C82 /* AudioDemuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 602881712D2BDF96004E1C82 /* AudioDemuxerViewController.m */; };
 		602881762D2D6D31004E1C82 /* input.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 602881752D2D6D31004E1C82 /* input.mp4 */; };
 		6028817A2D2E7968004E1C82 /* AudioDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 602881792D2E7968004E1C82 /* AudioDecoder.m */; };
+		6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028817D2D3007FC004E1C82 /* WeakProxy.m */; };
+		602881802D301142004E1C82 /* AudioRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028817F2D301142004E1C82 /* AudioRender.m */; };
+		602881842D30CBFB004E1C82 /* AudioRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 602881832D30CBFB004E1C82 /* AudioRenderViewController.m */; };
 		603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453B2D1C0A1B00F98374 /* AudioEncoder.m */; };
 		603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453E2D1C11DC00F98374 /* AudioTools.m */; };
 		6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1422C808AF500FFD4B2 /* AppDelegate.m */; };
@@ -43,6 +46,12 @@
 		602881752D2D6D31004E1C82 /* input.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = input.mp4; sourceTree = "<group>"; };
 		602881782D2E793B004E1C82 /* AudioDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioDecoder.h; sourceTree = "<group>"; };
 		602881792D2E7968004E1C82 /* AudioDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioDecoder.m; sourceTree = "<group>"; };
+		6028817C2D3007E6004E1C82 /* WeakProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeakProxy.h; sourceTree = "<group>"; };
+		6028817D2D3007FC004E1C82 /* WeakProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeakProxy.m; sourceTree = "<group>"; };
+		6028817F2D301142004E1C82 /* AudioRender.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioRender.m; sourceTree = "<group>"; };
+		602881812D301170004E1C82 /* AudioRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioRender.h; sourceTree = "<group>"; };
+		602881822D30CBE4004E1C82 /* AudioRenderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioRenderViewController.h; sourceTree = "<group>"; };
+		602881832D30CBFB004E1C82 /* AudioRenderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioRenderViewController.m; sourceTree = "<group>"; };
 		603D45382D1C09F200F98374 /* AudioEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
 		603D453B2D1C0A1B00F98374 /* AudioEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEncoder.m; sourceTree = "<group>"; };
 		603D453D2D1C11B800F98374 /* AudioTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioTools.h; sourceTree = "<group>"; };
@@ -104,6 +113,8 @@
 			isa = PBXGroup;
 			children = (
 				602881512D2798FF004E1C82 /* MediaBase.h */,
+				6028817C2D3007E6004E1C82 /* WeakProxy.h */,
+				6028817D2D3007FC004E1C82 /* WeakProxy.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -139,6 +150,15 @@
 			path = Decoder;
 			sourceTree = "<group>";
 		};
+		6028817B2D300692004E1C82 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				602881812D301170004E1C82 /* AudioRender.h */,
+				6028817F2D301142004E1C82 /* AudioRender.m */,
+			);
+			path = Render;
+			sourceTree = "<group>";
+		};
 		6091A1352C808AF500FFD4B2 = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +185,7 @@
 				602881772D2E789E004E1C82 /* Decoder */,
 				602881532D2799F4004E1C82 /* Muxer */,
 				602881692D2BDE66004E1C82 /* Demuxer */,
+				6028817B2D300692004E1C82 /* Render */,
 				6091A1412C808AF500FFD4B2 /* AppDelegate.h */,
 				6091A1422C808AF500FFD4B2 /* AppDelegate.m */,
 				6091A1442C808AF500FFD4B2 /* SceneDelegate.h */,
@@ -175,6 +196,8 @@
 				60BE1FDC2CAFC8A7002ED9D7 /* AudioCaptureViewController.m */,
 				602881702D2BDF80004E1C82 /* AudioDemuxerViewController.h */,
 				602881712D2BDF96004E1C82 /* AudioDemuxerViewController.m */,
+				602881822D30CBE4004E1C82 /* AudioRenderViewController.h */,
+				602881832D30CBFB004E1C82 /* AudioRenderViewController.m */,
 				6091A14A2C808AF500FFD4B2 /* Main.storyboard */,
 				6091A14D2C808AF600FFD4B2 /* Assets.xcassets */,
 				6091A14F2C808AF600FFD4B2 /* LaunchScreen.storyboard */,
@@ -256,17 +279,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */,
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
 				603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */,
 				6091A1602C808DDD00FFD4B2 /* AudioCapture.m in Sources */,
 				6028817A2D2E7968004E1C82 /* AudioDecoder.m in Sources */,
 				602881672D27AB18004E1C82 /* MP4Muxer.m in Sources */,
+				602881802D301142004E1C82 /* AudioRender.m in Sources */,
 				6091A1492C808AF500FFD4B2 /* ViewController.m in Sources */,
 				6028816F2D2BDED4004E1C82 /* DemuxerConfig.m in Sources */,
 				603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */,
 				6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */,
 				6091A1542C808AF600FFD4B2 /* main.m in Sources */,
 				6028815E2D27A753004E1C82 /* MuxerConfig.m in Sources */,
+				602881842D30CBFB004E1C82 /* AudioRenderViewController.m in Sources */,
 				602881722D2BDF96004E1C82 /* AudioDemuxerViewController.m in Sources */,
 				60BE1FDD2CAFC8A7002ED9D7 /* AudioCaptureViewController.m in Sources */,
 				6028816C2D2BDEB0004E1C82 /* MP4Demuxer.m in Sources */,
