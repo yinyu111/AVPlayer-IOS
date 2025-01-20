@@ -17,6 +17,9 @@
 		6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028817D2D3007FC004E1C82 /* WeakProxy.m */; };
 		602881802D301142004E1C82 /* AudioRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028817F2D301142004E1C82 /* AudioRender.m */; };
 		602881842D30CBFB004E1C82 /* AudioRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 602881832D30CBFB004E1C82 /* AudioRenderViewController.m */; };
+		602881872D367FD8004E1C82 /* VideoCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 602881862D367FD8004E1C82 /* VideoCaptureViewController.m */; };
+		6028818C2D36808A004E1C82 /* VideoCaptureConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028818B2D36808A004E1C82 /* VideoCaptureConfig.m */; };
+		6028818F2D3680A4004E1C82 /* VideoCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028818E2D3680A4004E1C82 /* VideoCapture.m */; };
 		603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453B2D1C0A1B00F98374 /* AudioEncoder.m */; };
 		603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453E2D1C11DC00F98374 /* AudioTools.m */; };
 		6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1422C808AF500FFD4B2 /* AppDelegate.m */; };
@@ -52,6 +55,14 @@
 		602881812D301170004E1C82 /* AudioRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioRender.h; sourceTree = "<group>"; };
 		602881822D30CBE4004E1C82 /* AudioRenderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioRenderViewController.h; sourceTree = "<group>"; };
 		602881832D30CBFB004E1C82 /* AudioRenderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioRenderViewController.m; sourceTree = "<group>"; };
+		602881852D367FCB004E1C82 /* VideoCaptureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCaptureViewController.h; sourceTree = "<group>"; };
+		602881862D367FD8004E1C82 /* VideoCaptureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCaptureViewController.m; sourceTree = "<group>"; };
+		6028818A2D36807D004E1C82 /* VideoCaptureConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCaptureConfig.h; sourceTree = "<group>"; };
+		6028818B2D36808A004E1C82 /* VideoCaptureConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCaptureConfig.m; sourceTree = "<group>"; };
+		6028818D2D368099004E1C82 /* VideoCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCapture.h; sourceTree = "<group>"; };
+		6028818E2D3680A4004E1C82 /* VideoCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCapture.m; sourceTree = "<group>"; };
+		602881902D3BBFC4004E1C82 /* KFAVDemo.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = KFAVDemo.app; path = "../../../../KFAVDemo-dmeqrzfqmfoilgcidrudwayiwkos/Build/Products/Debug-iphoneos/KFAVDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		602881922D3BBFC8004E1C82 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		603D45382D1C09F200F98374 /* AudioEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
 		603D453B2D1C0A1B00F98374 /* AudioEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEncoder.m; sourceTree = "<group>"; };
 		603D453D2D1C11B800F98374 /* AudioTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioTools.h; sourceTree = "<group>"; };
@@ -94,6 +105,10 @@
 				6091A15B2C808CEB00FFD4B2 /* AudioConfig.m */,
 				6091A15E2C808DD100FFD4B2 /* AudioCapture.h */,
 				6091A15F2C808DDD00FFD4B2 /* AudioCapture.m */,
+				6028818A2D36807D004E1C82 /* VideoCaptureConfig.h */,
+				6028818B2D36808A004E1C82 /* VideoCaptureConfig.m */,
+				6028818D2D368099004E1C82 /* VideoCapture.h */,
+				6028818E2D3680A4004E1C82 /* VideoCapture.m */,
 			);
 			path = Capture;
 			sourceTree = "<group>";
@@ -159,10 +174,28 @@
 			path = Render;
 			sourceTree = "<group>";
 		};
+		602881912D3BBFC4004E1C82 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				602881902D3BBFC4004E1C82 /* KFAVDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		602881932D3BBFC8004E1C82 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				602881922D3BBFC8004E1C82 /* Photos.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6091A1352C808AF500FFD4B2 = {
 			isa = PBXGroup;
 			children = (
 				6091A1402C808AF500FFD4B2 /* AVPlayer */,
+				602881912D3BBFC4004E1C82 /* Products */,
+				602881932D3BBFC8004E1C82 /* Frameworks */,
 				6091A13F2C808AF500FFD4B2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -198,6 +231,8 @@
 				602881712D2BDF96004E1C82 /* AudioDemuxerViewController.m */,
 				602881822D30CBE4004E1C82 /* AudioRenderViewController.h */,
 				602881832D30CBFB004E1C82 /* AudioRenderViewController.m */,
+				602881852D367FCB004E1C82 /* VideoCaptureViewController.h */,
+				602881862D367FD8004E1C82 /* VideoCaptureViewController.m */,
 				6091A14A2C808AF500FFD4B2 /* Main.storyboard */,
 				6091A14D2C808AF600FFD4B2 /* Assets.xcassets */,
 				6091A14F2C808AF600FFD4B2 /* LaunchScreen.storyboard */,
@@ -279,7 +314,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6028818C2D36808A004E1C82 /* VideoCaptureConfig.m in Sources */,
 				6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */,
+				602881872D367FD8004E1C82 /* VideoCaptureViewController.m in Sources */,
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
 				603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */,
 				6091A1602C808DDD00FFD4B2 /* AudioCapture.m in Sources */,
@@ -295,6 +332,7 @@
 				602881842D30CBFB004E1C82 /* AudioRenderViewController.m in Sources */,
 				602881722D2BDF96004E1C82 /* AudioDemuxerViewController.m in Sources */,
 				60BE1FDD2CAFC8A7002ED9D7 /* AudioCaptureViewController.m in Sources */,
+				6028818F2D3680A4004E1C82 /* VideoCapture.m in Sources */,
 				6028816C2D2BDEB0004E1C82 /* MP4Demuxer.m in Sources */,
 				6091A1462C808AF500FFD4B2 /* SceneDelegate.m in Sources */,
 			);

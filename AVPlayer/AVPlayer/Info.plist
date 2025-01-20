@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app requires microphone access to record audio.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>此应用需要访问您的相册，以便存储和管理您的照片。</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -23,6 +23,10 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>此应用需要麦克风访问权限才能录制音频。</string>
+	<key>NSCameraUsageDescription</key>
+	<string>此应用程序需要使用相机来拍摄照片或录制视频</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 </dict>
