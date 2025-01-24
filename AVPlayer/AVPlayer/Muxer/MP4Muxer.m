@@ -226,7 +226,7 @@ typedef NS_ENUM(NSInteger, MP4MuxerStatus) {
 - (void)_flushMuxer {
     // 将队列数据消费掉。
     [self _appendAudioSample];
-    [self _appendAudioSample];
+    [self _appendVideoSample];
 }
 
 - (void)_appendAudioSample {

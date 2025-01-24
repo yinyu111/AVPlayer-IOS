@@ -57,7 +57,15 @@
     if (!_videoOutput) {
         _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
         [_videoOutput setSampleBufferDelegate:self queue:self.captureQueue]; // 设置返回采集数据的代理和回调。
-        _videoOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(_config.pixelFormatType)};
+//        _videoOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(_config.pixelFormatType)};
+        NSArray *availableFormats = _videoOutput.availableVideoCVPixelFormatTypes;
+        if ([availableFormats containsObject:@(_config.pixelFormatType)]) {
+            _videoOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: @(_config.pixelFormatType)};
+        } else {
+            // 这里可以根据实际情况选择一个默认的支持的像素格式，例如使用第一个支持的像素格式
+            NSNumber *defaultFormat = availableFormats[0];
+            _videoOutput.videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey: defaultFormat};
+        }
         _videoOutput.alwaysDiscardsLateVideoFrames = YES; // YES 表示：采集的下一帧到来前，如果有还未处理完的帧，丢掉。
     }
     

@@ -138,63 +138,7 @@
     } else {
         NSLog(@"无相册权限。");
     }
-    
-//    if (authorizationStatus == PHAuthorizationStatusAuthorized) {
-//        PHPhotoLibrary *library = [PHPhotoLibrary sharedPhotoLibrary];
-//        [library performChanges:^{
-//            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-//        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//            // 在此处理完成后的操作
-//        }];
-//    } else if (authorizationStatus == PHAuthorizationStatusNotDetermined) {
-//        // 如果没请求过相册权限，弹出指示框，让用户选择。
-//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-//            // 如果用户选择授权，则保存图片。
-//            if (status == PHAuthorizationStatusAuthorized) {
-//                PHPhotoLibrary *library = [PHPhotoLibrary sharedPhotoLibrary];
-//                [library performChanges:^{
-//                    [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-//                } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//                    // 在此处理完成后的操作
-//                }];
-//            }
-//        }];
-//    } else {
-//        NSLog(@"无相册权限。");
-//    }
-    
-//    PHAuthorizationStatus authorizationStatus = [PHPhotoLibrary authorizationStatus];
-//    if (authorizationStatus == PHAuthorizationStatusAuthorized) {
-//        PHPhotoLibrary *library = [PHPhotoLibrary sharedPhotoLibrary];
-//        [library performChanges:^{
-//            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-//        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//            if (success) {
-//                NSLog(@"保存图片成功");
-//            } else {
-//                NSLog(@"保存图片失败，错误: %@", error);
-//            }
-//        }];
-//    } else if (authorizationStatus == PHAuthorizationStatusNotDetermined) {
-//        // 如果没请求过相册权限，弹出指示框，让用户选择。
-//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-//            // 如果用户选择授权，则保存图片。
-//            if (status == PHAuthorizationStatusAuthorized) {
-//                PHPhotoLibrary *library = [PHPhotoLibrary sharedPhotoLibrary];
-//                [library performChanges:^{
-//                    [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-//                } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//                    if (success) {
-//                        NSLog(@"保存图片成功");
-//                    } else {
-//                        NSLog(@"保存图片失败，错误: %@", error);
-//                    }
-//                }];
-//            }
-//        }];
-//    } else {
-//        NSLog(@"无相册权限。");
-//    }
+
 }
 
 - (UIImage *)imageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer {
