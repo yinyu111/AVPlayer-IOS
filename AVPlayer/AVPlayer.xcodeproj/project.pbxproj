@@ -36,6 +36,7 @@
 		60E9317B2D40E36F003F337C /* VideoEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E9317A2D40E36F003F337C /* VideoEncoder.m */; };
 		60E9317E2D40F20A003F337C /* VideoEncoderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E9317D2D40F20A003F337C /* VideoEncoderViewController.m */; };
 		60E931822D436F4F003F337C /* VideoMuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931812D436F4F003F337C /* VideoMuxerViewController.m */; };
+		60E931862D4389BB003F337C /* VideoDemuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931852D4389BB003F337C /* VideoDemuxerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,8 @@
 		60E9317D2D40F20A003F337C /* VideoEncoderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoEncoderViewController.m; sourceTree = "<group>"; };
 		60E931802D436EEE003F337C /* VideoMuxerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoMuxerViewController.h; sourceTree = "<group>"; };
 		60E931812D436F4F003F337C /* VideoMuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoMuxerViewController.m; sourceTree = "<group>"; };
+		60E931842D4389B0003F337C /* VideoDemuxerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoDemuxerViewController.h; sourceTree = "<group>"; };
+		60E931852D4389BB003F337C /* VideoDemuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoDemuxerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,8 @@
 				60E9317D2D40F20A003F337C /* VideoEncoderViewController.m */,
 				60E931802D436EEE003F337C /* VideoMuxerViewController.h */,
 				60E931812D436F4F003F337C /* VideoMuxerViewController.m */,
+				60E931842D4389B0003F337C /* VideoDemuxerViewController.h */,
+				60E931852D4389BB003F337C /* VideoDemuxerViewController.m */,
 				6091A14A2C808AF500FFD4B2 /* Main.storyboard */,
 				6091A14D2C808AF600FFD4B2 /* Assets.xcassets */,
 				6091A14F2C808AF600FFD4B2 /* LaunchScreen.storyboard */,
@@ -335,6 +340,7 @@
 				60BE1FDD2CAFC8A7002ED9D7 /* AudioCaptureViewController.m in Sources */,
 				6028818F2D3680A4004E1C82 /* VideoCapture.m in Sources */,
 				6028816C2D2BDEB0004E1C82 /* MP4Demuxer.m in Sources */,
+				60E931862D4389BB003F337C /* VideoDemuxerViewController.m in Sources */,
 				60E9317E2D40F20A003F337C /* VideoEncoderViewController.m in Sources */,
 				6091A1462C808AF500FFD4B2 /* SceneDelegate.m in Sources */,
 				60E931822D436F4F003F337C /* VideoMuxerViewController.m in Sources */,
