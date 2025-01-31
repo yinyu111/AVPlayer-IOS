@@ -32,8 +32,8 @@ static NSString * const MainTableCellIdentifier = @"MainTableCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.demoList = @[@"Audio Capture", @"Audio Demuxer", @"Audio Render", @"Video Encoder", @"Video Muxer", @"Video Demuxer"];
-    self.demoPageNameList = @[@"AudioCaptureViewController", @"AudioDemuxerViewController", @"AudioRenderViewController", @"VideoEncoderViewController", @"VideoMuxerViewController", @"VideoDemuxerViewController"];
+    self.demoList = @[@"Audio Capture", @"Audio Demuxer", @"Audio Render", @"Video Encoder", @"Video Muxer", @"Video Demuxer", @"Video Remuxer"];
+    self.demoPageNameList = @[@"AudioCaptureViewController", @"AudioDemuxerViewController", @"AudioRenderViewController", @"VideoEncoderViewController", @"VideoMuxerViewController", @"VideoDemuxerViewController", @"VideoRemuxerViewController"];
     
     [self setupUI];
 }

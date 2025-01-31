@@ -265,6 +265,10 @@ typedef NS_ENUM(NSInteger, MP4MuxerStatus) {
                     CMSampleBufferRef videoSample = (CMSampleBufferRef)CMSimpleQueueDequeue(_videoQueue);
                     [self.writerVideoInput appendSampleBuffer:videoSample];
                     CFRelease(videoSample);
+                } else {
+                    CMSampleBufferRef audioSample = (CMSampleBufferRef)CMSimpleQueueDequeue(_audioQueue);
+                    [self.writerAudioInput appendSampleBuffer:audioSample];
+                    CFRelease(audioSample);
                 }
             } else {
                 break;

@@ -37,6 +37,7 @@
 		60E9317E2D40F20A003F337C /* VideoEncoderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E9317D2D40F20A003F337C /* VideoEncoderViewController.m */; };
 		60E931822D436F4F003F337C /* VideoMuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931812D436F4F003F337C /* VideoMuxerViewController.m */; };
 		60E931862D4389BB003F337C /* VideoDemuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931852D4389BB003F337C /* VideoDemuxerViewController.m */; };
+		60E931892D48FC85003F337C /* VideoRemuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931882D48FC85003F337C /* VideoRemuxerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,8 @@
 		60E931812D436F4F003F337C /* VideoMuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoMuxerViewController.m; sourceTree = "<group>"; };
 		60E931842D4389B0003F337C /* VideoDemuxerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoDemuxerViewController.h; sourceTree = "<group>"; };
 		60E931852D4389BB003F337C /* VideoDemuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoDemuxerViewController.m; sourceTree = "<group>"; };
+		60E931882D48FC85003F337C /* VideoRemuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoRemuxerViewController.m; sourceTree = "<group>"; };
+		60E9318A2D48FCB7003F337C /* VideoRemuxerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoRemuxerViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +241,8 @@
 				60E931812D436F4F003F337C /* VideoMuxerViewController.m */,
 				60E931842D4389B0003F337C /* VideoDemuxerViewController.h */,
 				60E931852D4389BB003F337C /* VideoDemuxerViewController.m */,
+				60E9318A2D48FCB7003F337C /* VideoRemuxerViewController.h */,
+				60E931882D48FC85003F337C /* VideoRemuxerViewController.m */,
 				6091A14A2C808AF500FFD4B2 /* Main.storyboard */,
 				6091A14D2C808AF600FFD4B2 /* Assets.xcassets */,
 				6091A14F2C808AF600FFD4B2 /* LaunchScreen.storyboard */,
@@ -320,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6028818C2D36808A004E1C82 /* VideoCaptureConfig.m in Sources */,
+				60E931892D48FC85003F337C /* VideoRemuxerViewController.m in Sources */,
 				6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */,
 				602881872D367FD8004E1C82 /* VideoCaptureViewController.m in Sources */,
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
