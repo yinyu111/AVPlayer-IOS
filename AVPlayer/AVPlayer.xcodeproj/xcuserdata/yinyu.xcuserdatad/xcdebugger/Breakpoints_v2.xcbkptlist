@@ -338,36 +338,6 @@
             endingLineNumber = "121"
             landmarkName = "-saveSampleBuffer:"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "858290BE-7C73-4D9A-AC29-BD987070179F - 90e7d173f162c9c6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[VideoCaptureViewController saveSampleBuffer:]"
-                  moduleName = "AVPlayer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yinyu/code/xcode/AVPlayer-IOS/AVPlayer/AVPlayer/VideoCaptureViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "121"
-                  endingLineNumber = "121">
-               </Location>
-               <Location
-                  uuid = "858290BE-7C73-4D9A-AC29-BD987070179F - b29ed47ecd330520"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__47-[VideoCaptureViewController saveSampleBuffer:]_block_invoke"
-                  moduleName = "AVPlayer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yinyu/code/xcode/AVPlayer-IOS/AVPlayer/AVPlayer/VideoCaptureViewController.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "122"
-                  endingLineNumber = "122">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -485,52 +455,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6B80E163-10C9-49EE-A922-87C197058AF9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayer/Muxer/MP4Muxer.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "-stopWriting:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6B80E163-10C9-49EE-A922-87C197058AF9 - aadf1b71c8f9e0d3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__24-[MP4Muxer stopWriting:]_block_invoke"
-                  moduleName = "AVPlayer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yinyu/code/xcode/AVPlayer-IOS/AVPlayer/AVPlayer/Muxer/MP4Muxer.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148">
-               </Location>
-               <Location
-                  uuid = "6B80E163-10C9-49EE-A922-87C197058AF9 - 1bac98645145aadd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__24-[MP4Muxer stopWriting:]_block_invoke_2"
-                  moduleName = "AVPlayer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yinyu/code/xcode/AVPlayer-IOS/AVPlayer/AVPlayer/Muxer/MP4Muxer.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "149"
-                  endingLineNumber = "149">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "624B033C-034D-4893-8DF9-94A592665B50"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -541,6 +465,54 @@
             startingLineNumber = "132"
             endingLineNumber = "132"
             landmarkName = "-stop"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C439FFE3-7B7B-4280-BC45-163213316661"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayer/AudioDemuxerViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "-fetchAndSaveDemuxedData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ABBA25B1-A6AD-4521-8DE3-BAA0787589B4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayer/VideoDemuxerViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "-fetchAndSaveDemuxedData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7698AB89-2E1B-4276-90D6-13E9E3D97100"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayer/Muxer/MP4Muxer.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
+            landmarkName = "-_stopWriting:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

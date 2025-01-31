@@ -38,6 +38,8 @@
 		60E931822D436F4F003F337C /* VideoMuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931812D436F4F003F337C /* VideoMuxerViewController.m */; };
 		60E931862D4389BB003F337C /* VideoDemuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931852D4389BB003F337C /* VideoDemuxerViewController.m */; };
 		60E931892D48FC85003F337C /* VideoRemuxerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E931882D48FC85003F337C /* VideoRemuxerViewController.m */; };
+		60F8E0122D4CB12900724186 /* VideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F8E0112D4CB12900724186 /* VideoDecoder.m */; };
+		60F8E0152D4CB18B00724186 /* VideoDecoderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60F8E0142D4CB18B00724186 /* VideoDecoderViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +103,10 @@
 		60E931852D4389BB003F337C /* VideoDemuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoDemuxerViewController.m; sourceTree = "<group>"; };
 		60E931882D48FC85003F337C /* VideoRemuxerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoRemuxerViewController.m; sourceTree = "<group>"; };
 		60E9318A2D48FCB7003F337C /* VideoRemuxerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoRemuxerViewController.h; sourceTree = "<group>"; };
+		60F8E0102D4CB11900724186 /* VideoDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoDecoder.h; sourceTree = "<group>"; };
+		60F8E0112D4CB12900724186 /* VideoDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoDecoder.m; sourceTree = "<group>"; };
+		60F8E0132D4CB17C00724186 /* VideoDecoderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoDecoderViewController.h; sourceTree = "<group>"; };
+		60F8E0142D4CB18B00724186 /* VideoDecoderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoDecoderViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +187,8 @@
 			children = (
 				602881782D2E793B004E1C82 /* AudioDecoder.h */,
 				602881792D2E7968004E1C82 /* AudioDecoder.m */,
+				60F8E0102D4CB11900724186 /* VideoDecoder.h */,
+				60F8E0112D4CB12900724186 /* VideoDecoder.m */,
 			);
 			path = Decoder;
 			sourceTree = "<group>";
@@ -243,6 +251,8 @@
 				60E931852D4389BB003F337C /* VideoDemuxerViewController.m */,
 				60E9318A2D48FCB7003F337C /* VideoRemuxerViewController.h */,
 				60E931882D48FC85003F337C /* VideoRemuxerViewController.m */,
+				60F8E0132D4CB17C00724186 /* VideoDecoderViewController.h */,
+				60F8E0142D4CB18B00724186 /* VideoDecoderViewController.m */,
 				6091A14A2C808AF500FFD4B2 /* Main.storyboard */,
 				6091A14D2C808AF600FFD4B2 /* Assets.xcassets */,
 				6091A14F2C808AF600FFD4B2 /* LaunchScreen.storyboard */,
@@ -328,8 +338,10 @@
 				60E931892D48FC85003F337C /* VideoRemuxerViewController.m in Sources */,
 				6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */,
 				602881872D367FD8004E1C82 /* VideoCaptureViewController.m in Sources */,
+				60F8E0152D4CB18B00724186 /* VideoDecoderViewController.m in Sources */,
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
 				603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */,
+				60F8E0122D4CB12900724186 /* VideoDecoder.m in Sources */,
 				6091A1602C808DDD00FFD4B2 /* AudioCapture.m in Sources */,
 				60E931782D40E355003F337C /* VideoEncoderConfig.m in Sources */,
 				6028817A2D2E7968004E1C82 /* AudioDecoder.m in Sources */,
