@@ -8,6 +8,7 @@
 #import "VideoDecoderViewController.h"
 #import "MP4Demuxer.h"
 #import "VideoDecoder.h"
+#import <CoreVideo/CoreVideo.h>
 
 #define DecompressionMaxCount 5
 
@@ -58,9 +59,23 @@
         _decoder.errorCallBack = ^(NSError *error) {
             NSLog(@"VideoDecoder error %zi %@",error.code,error.localizedDescription);
         };
+        
         _decoder.pixelBufferOutputCallBack = ^(CVPixelBufferRef pixelBuffer, CMTime ptsTime) {
+            static int frameNumber = 0;
+            
             // 解码数据回调。存储解码后的数据为 YUV 文件。
             [weakSelf savePixelBuffer:pixelBuffer time:ptsTime];
+            
+//            NSData *rgbaData = convertPixelBufferToRGBAData(pixelBuffer);
+//            // 或者使用手动转换（如果是 NV12 格式）
+//            // NSData *rgbaData = convertNV12PixelBufferToRGBAData(pixelBuffer);
+//
+//            // 将 RGBA 数据保存到文件
+//            NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+//            NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"output_%d.rgba", frameNumber]];
+//            [rgbaData writeToFile:filePath atomically:YES];
+            
+            frameNumber++;
         };
     }
     
@@ -82,7 +97,7 @@
         [[NSFileManager defaultManager] createFileAtPath:videoPath contents:nil attributes:nil];
         _fileHandle = [NSFileHandle fileHandleForWritingAtPath:videoPath];
     }
-    
+
     return _fileHandle;
 }
 
@@ -95,6 +110,7 @@
     UIBarButtonItem *startBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(start)];
     self.navigationItem.rightBarButtonItems = @[startBarButton];
     
+    // 完成音频解码后，可以将 App Document 文件夹下面的 output.yuv 文件拷贝到电脑上，使用 ffplay 播放：
     // ffplay -f rawvideo -pix_fmt nv12 -video_size 1280x720 -i output.yuv
 
 }
@@ -141,16 +157,96 @@
     if (!pixelBuffer) {
         return;
     }
+    size_t width = CVPixelBufferGetWidth(pixelBuffer);
+    size_t height = CVPixelBufferGetHeight(pixelBuffer);
+    NSLog(@"Pixel buffer resolution: %zu x %zu", width, height);
     
-    // 取出 YUV 数据，按照 NV12 的 YUV 格式存储。
+    
+    OSType pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer);
+    
     CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-    NSMutableData *mutableData = [NSMutableData new];
-    for (size_t index = 0; index < CVPixelBufferGetPlaneCount(pixelBuffer); index++) {
-        size_t bytesPerRowOfPlane = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, index);
-        size_t height = CVPixelBufferGetHeightOfPlane(pixelBuffer, index);
-        void *data = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, index);
-        [mutableData appendBytes:data length:bytesPerRowOfPlane * height];
-    }
+        NSMutableData *mutableData = [NSMutableData new];
+        
+        if (pixelFormat == kCVPixelFormatType_420YpCbCr8Planar) {
+            NSLog(@"kCVPixelFormatType_420YpCbCr8Planar: %u", (unsigned int)pixelFormat);
+            // 处理 Y 平面
+            size_t yBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 0);
+            size_t yWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0);
+            size_t yHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 0);
+            void *yData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+            for (size_t y = 0; y < yHeight; y++) {
+                [mutableData appendBytes:(char *)yData + y * yBytesPerRow length:yWidth];
+            }
+            
+            // 处理 U 平面
+            size_t uBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 1);
+            size_t uWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1);
+            size_t uHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 1);
+            void *uData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+            for (size_t y = 0; y < uHeight; y++) {
+                [mutableData appendBytes:(char *)uData + y * uBytesPerRow length:uWidth];
+            }
+            
+            // 处理 V 平面
+            size_t vBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 2);
+            size_t vWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 2);
+            size_t vHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 2);
+            void *vData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 2);
+            for (size_t y = 0; y < vHeight; y++) {
+                [mutableData appendBytes:(char *)vData + y * vBytesPerRow length:vWidth];
+            }
+        } else if (pixelFormat == kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange) {
+            NSLog(@"kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange: %u", (unsigned int)pixelFormat);
+            // 原有的 NV12 处理逻辑
+            // 处理 Y 平面
+            size_t yBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 0);
+            size_t yWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0);
+            size_t yHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 0);
+            void *yData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+            for (size_t y = 0; y < yHeight; y++) {
+                [mutableData appendBytes:(char *)yData + y * yBytesPerRow length:yWidth];
+            }
+
+            // 处理 UV 平面
+            size_t uvBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 1);
+            size_t uvWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1);
+            size_t uvHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 1);
+            void *uvData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+            for (size_t y = 0; y < uvHeight; y++) {
+                [mutableData appendBytes:(char *)uvData + y * uvBytesPerRow length:uvWidth];
+            }
+        } else if (pixelFormat == kCVPixelFormatType_420YpCbCr8BiPlanarFullRange) {
+            NSLog(@"kCVPixelFormatType_420YpCbCr8BiPlanarFullRange: %u", (unsigned int)pixelFormat);
+            // 锁定像素缓冲区以进行读写操作
+                    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+                    
+                    // 处理 Y 平面
+                    size_t yBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 0);
+                    size_t yWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0);
+                    size_t yHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 0);
+                    void *yData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+                    for (size_t y = 0; y < yHeight; y++) {
+                        [mutableData appendBytes:(char *)yData + y * yBytesPerRow length:yWidth];
+                    }
+                    
+                    // 处理 UV 平面
+                    size_t uvBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(pixelBuffer, 1);
+                    size_t uvWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1);
+                    size_t uvHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 1);
+                    void *uvData = CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+                    for (size_t y = 0; y < uvHeight; y++) {
+                        [mutableData appendBytes:(char *)uvData + y * uvBytesPerRow length:uvWidth * 2];
+                        // 注意：UV 平面每个元素占 2 字节（U 和 V 交织），所以长度乘以 2
+                    }
+                    
+                    // 解锁像素缓冲区
+                    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+        } else {
+            NSLog(@"Unsupported pixel format: %u", (unsigned int)pixelFormat);
+            return;
+        }
+    
+    
     VideoDecoderFrame *newFrame = [VideoDecoderFrame new];
     newFrame.data = mutableData;
     newFrame.time = CMTimeGetSeconds(time);
@@ -163,7 +259,13 @@
         NSArray *sortedArray = [self.yuvDataArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
             Float64 first = [(VideoDecoderFrame *) a time];
             Float64 second = [(VideoDecoderFrame *) b time];
-            return first >= second;
+            if (first < second) {
+                return NSOrderedAscending;
+            } else if (first > second) {
+                return NSOrderedDescending;
+            } else {
+                return NSOrderedSame;
+            }
         }];
         self.yuvDataArray = [[NSMutableArray alloc] initWithArray:sortedArray];
         VideoDecoderFrame *firstFrame = [self.yuvDataArray firstObject];
@@ -172,4 +274,65 @@
     }
 }
 
+void checkPixelBufferFormat(CVPixelBufferRef pixelBuffer) {
+    // 获取像素格式
+    OSType pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer);
+    
+    switch (pixelFormat) {
+        case kCVPixelFormatType_32BGRA:
+            NSLog(@"Pixel buffer format is 32BGRA");
+            break;
+        case kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange:
+            NSLog(@"Pixel buffer format is NV12 (420YpCbCr8BiPlanarVideoRange)");
+            break;
+        case kCVPixelFormatType_420YpCbCr8Planar:
+            NSLog(@"Pixel buffer format is I420 (420YpCbCr8Planar)");
+            break;
+        case kCVPixelFormatType_420YpCbCr8BiPlanarFullRange:
+            NSLog(@"Pixel buffer format is 420f");
+            break;
+        // 可以根据需要添加更多的格式判断
+        default:
+            NSLog(@"Unknown pixel buffer format: %u", (unsigned int)pixelFormat);
+            break;
+    }
+}
+
+NSData *convertPixelBufferToRGBAData(CVPixelBufferRef pixelBuffer) {
+    // 创建 CIContext
+    CIContext *context = [CIContext contextWithOptions:nil];
+    
+    // 将 CVPixelBufferRef 转换为 CIImage
+    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+    
+    // 获取图像的尺寸
+    CGRect extent = [ciImage extent];
+    size_t width = CGRectGetWidth(extent);
+    size_t height = CGRectGetHeight(extent);
+    
+    // 创建一个用于存储 RGBA 数据的缓冲区
+    size_t bytesPerRow = width * 4;
+    size_t bufferSize = bytesPerRow * height;
+    void *rgbaBuffer = malloc(bufferSize);
+    
+    // 使用 CIContext 将 CIImage 渲染到 RGBA 缓冲区
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        [context render:ciImage toBitmap: rgbaBuffer
+               rowBytes: bytesPerRow
+                 bounds: extent
+               format: kCIFormatRGBA8
+            colorSpace: colorSpace];
+        CGColorSpaceRelease(colorSpace);
+    
+    // 将 RGBA 缓冲区的数据封装成 NSData
+    NSData *rgbaData = [NSData dataWithBytes: rgbaBuffer length: bufferSize];
+    
+    // 释放缓冲区
+    free(rgbaBuffer);
+    
+    return rgbaData;
+}
+
+
 @end
+
