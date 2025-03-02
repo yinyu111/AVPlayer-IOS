@@ -22,6 +22,9 @@
 		6028818F2D3680A4004E1C82 /* VideoCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6028818E2D3680A4004E1C82 /* VideoCapture.m */; };
 		603D453C2D1C0A1B00F98374 /* AudioEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453B2D1C0A1B00F98374 /* AudioEncoder.m */; };
 		603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 603D453E2D1C11DC00F98374 /* AudioTools.m */; };
+		608FDF402D730E4C00D364E6 /* MetalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 608FDF3F2D730E4C00D364E6 /* MetalView.m */; };
+		608FDF432D730E7400D364E6 /* render.metal in Sources */ = {isa = PBXBuildFile; fileRef = 608FDF422D730E7400D364E6 /* render.metal */; };
+		608FDF482D74526900D364E6 /* VideoRnederViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 608FDF472D74526900D364E6 /* VideoRnederViewController.m */; };
 		6091A1432C808AF500FFD4B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1422C808AF500FFD4B2 /* AppDelegate.m */; };
 		6091A1462C808AF500FFD4B2 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1452C808AF500FFD4B2 /* SceneDelegate.m */; };
 		6091A1492C808AF500FFD4B2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091A1482C808AF500FFD4B2 /* ViewController.m */; };
@@ -73,6 +76,12 @@
 		603D453B2D1C0A1B00F98374 /* AudioEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEncoder.m; sourceTree = "<group>"; };
 		603D453D2D1C11B800F98374 /* AudioTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioTools.h; sourceTree = "<group>"; };
 		603D453E2D1C11DC00F98374 /* AudioTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioTools.m; sourceTree = "<group>"; };
+		608FDF3E2D730E3B00D364E6 /* MetalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalView.h; sourceTree = "<group>"; };
+		608FDF3F2D730E4C00D364E6 /* MetalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalView.m; sourceTree = "<group>"; };
+		608FDF412D730E6500D364E6 /* ShaderType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderType.h; sourceTree = "<group>"; };
+		608FDF422D730E7400D364E6 /* render.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = render.metal; sourceTree = "<group>"; };
+		608FDF442D74523900D364E6 /* VideoRenderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoRenderViewController.h; sourceTree = "<group>"; };
+		608FDF472D74526900D364E6 /* VideoRnederViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoRnederViewController.m; sourceTree = "<group>"; };
 		6091A13E2C808AF500FFD4B2 /* AVPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6091A1412C808AF500FFD4B2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6091A1422C808AF500FFD4B2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -198,6 +207,10 @@
 			children = (
 				602881812D301170004E1C82 /* AudioRender.h */,
 				6028817F2D301142004E1C82 /* AudioRender.m */,
+				608FDF3E2D730E3B00D364E6 /* MetalView.h */,
+				608FDF3F2D730E4C00D364E6 /* MetalView.m */,
+				608FDF412D730E6500D364E6 /* ShaderType.h */,
+				608FDF422D730E7400D364E6 /* render.metal */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -258,6 +271,8 @@
 				6091A14F2C808AF600FFD4B2 /* LaunchScreen.storyboard */,
 				6091A1522C808AF600FFD4B2 /* Info.plist */,
 				6091A1532C808AF600FFD4B2 /* main.m */,
+				608FDF442D74523900D364E6 /* VideoRenderViewController.h */,
+				608FDF472D74526900D364E6 /* VideoRnederViewController.m */,
 			);
 			path = AVPlayer;
 			sourceTree = "<group>";
@@ -334,16 +349,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				608FDF432D730E7400D364E6 /* render.metal in Sources */,
 				6028818C2D36808A004E1C82 /* VideoCaptureConfig.m in Sources */,
 				60E931892D48FC85003F337C /* VideoRemuxerViewController.m in Sources */,
 				6028817E2D3007FC004E1C82 /* WeakProxy.m in Sources */,
 				602881872D367FD8004E1C82 /* VideoCaptureViewController.m in Sources */,
+				608FDF402D730E4C00D364E6 /* MetalView.m in Sources */,
 				60F8E0152D4CB18B00724186 /* VideoDecoderViewController.m in Sources */,
 				6091A15C2C808CEB00FFD4B2 /* AudioConfig.m in Sources */,
 				603D453F2D1C11DC00F98374 /* AudioTools.m in Sources */,
 				60F8E0122D4CB12900724186 /* VideoDecoder.m in Sources */,
 				6091A1602C808DDD00FFD4B2 /* AudioCapture.m in Sources */,
 				60E931782D40E355003F337C /* VideoEncoderConfig.m in Sources */,
+				608FDF482D74526900D364E6 /* VideoRnederViewController.m in Sources */,
 				6028817A2D2E7968004E1C82 /* AudioDecoder.m in Sources */,
 				602881672D27AB18004E1C82 /* MP4Muxer.m in Sources */,
 				602881802D301142004E1C82 /* AudioRender.m in Sources */,
