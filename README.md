@@ -20,7 +20,7 @@ AVPlayer - IOS 是基于 iOS 平台的音视频处理项目，借助 AVFoundatio
 #### **Encoder 模块**
 用于对采集到的音视频进行编码处理，包含以下文件：<br>
 - AudioEncoder：主要是有获取音频编码码率、编码的接口、音频编码数据回调和错误回调的接口。<br>
-- AudioTools：可能包含一些音频处理的工具方法或辅助函数。<br>
+- AudioTools：包含一些音频处理的工具方法和辅助函数。<br>
 - VideoEncoderConfig：配置视频编码相关的参数和设置。<br>
 - VideoEncoder：获取视频编码配置以及视频编码数据回调和错误回调的接口，编码、刷新重建编码器、清空编码缓冲区的接口。<br>
 
